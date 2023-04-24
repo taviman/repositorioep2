@@ -50,7 +50,22 @@ def afundados(frota,tabuleiro):
                     break
             if afundado== True:
                 resultado+=1
-    return resultado                
+    return resultado
+
+def posicao_valida(dic,linha,coluna,orientacao,tamanho):
+    
+    novo_navio=define_posicoes(linha,coluna,orientacao,tamanho)
+    for n in novo_navio:
+        if n[0] < 0 or n[1]<0 or n[0]>9 or n[1]>9:
+            return False
+        for i in dic.values():
+            for j in range(len(i)):
+                if n in i[j]:
+                    return False
+    if dic=={}:
+        return True
+    return True
+
 
 
             
