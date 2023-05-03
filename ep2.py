@@ -4,7 +4,7 @@ def define_posicoes(linha,coluna,orientacao,tamanho):
     if orientacao == 'vertical':
         for i in range(tamanho):
             posicoes.append([linha+i,coluna])
-    elif orientacao== 'horizontal':
+    elif orientacao == 'horizontal':
         for j in range(tamanho):
             posicoes.append([linha,coluna+j])
     return posicoes
@@ -22,17 +22,17 @@ def faz_jogada(tabu,linha,coluna):
     else:
         tabu[linha][coluna]='-'
     return tabu
-#Posiciona frota
+# Posiciona Frota 
 def posiciona_frota(frota):
-    grid=[0]*10
+    grid = [0]*10 
     for i in range(len(grid)):
-        grid[i]=[0]*10
+        grid[i] = [0]*10
     for cordenadas in frota.values():
         for j in cordenadas:
             for i in j:
-                linha=i[0]
-                coluna=i[1]
-                grid[linha][coluna]=1
+                linha = i[0]
+                coluna = i[1]
+                grid[linha][coluna] = 1 
     return grid
 #Quantas embarcaçoes afundadas
 def afundados(frota,tabuleiro):
@@ -105,7 +105,7 @@ for nome in frota.keys():
             print('Esta posição não está válida!')
         else:
             preenche_frota(frota,nome,linha,coluna,orie,tamanho_frota[nome])
-            n+=1
+            n+=1 # corrigindo o posicionando frota
 print(frota)
 
 
