@@ -66,6 +66,27 @@ def posicao_valida(dic,linha,coluna,orientacao,tamanho):
         return True
     return True
 #Posicionando Frota
+# adiconando frota_oponente
+frota_oponente = {
+    'porta-aviões': [
+        [[9, 1], [9, 2], [9, 3], [9, 4]]
+    ],
+    'navio-tanque': [
+        [[6, 0], [6, 1], [6, 2]],
+        [[4, 3], [5, 3], [6, 3]]
+    ],
+    'contratorpedeiro': [
+        [[1, 6], [1, 7]],
+        [[0, 5], [1, 5]],
+        [[3, 6], [3, 7]]
+    ],
+    'submarino': [
+        [[2, 7]],
+        [[0, 6]],
+        [[9, 7]],
+        [[7,6]]
+]
+}
 frota = {
     "porta-aviões":[],
     "navio-tanque":[],
@@ -106,7 +127,44 @@ for nome in frota.keys():
         else:
             preenche_frota(frota,nome,linha,coluna,orie,tamanho_frota[nome])
             n+=1 # corrigindo o posicionando frota
-print(frota)
+# print(frota)
+# começando jogadas do jogador
+tabuleiro_oponente = posiciona_frota(frota_oponente)
+
+def monta_tabuleiros(tabuleiro_jogador, tabuleiro_oponente):
+    texto = ''
+    texto += '   0  1  2  3  4  5  6  7  8  9         0  1  2  3  4  5  6  7  8  9\n'
+    texto += '_______________________________      _______________________________\n'
+
+    for linha in range(len(tabuleiro_jogador)):
+        jogador_info = '  '.join([str(item) for item in tabuleiro_jogador[linha]])
+        oponente_info = '  '.join([info if str(info) in 'X-' else '0' for info in tabuleiro_oponente[linha]])
+        texto += f'{linha}| {jogador_info}|     {linha}| {oponente_info}|\n'
+    return texto
+grid_frota=posiciona_frota(frota)
+grid_oponente=posiciona_frota(frota_oponente)
+old_ataque=[]
+jogando=True
+while jogando==True:
+    grid=monta_tabuleiros(grid_frota,grid_oponente)
+    print(grid)
+    repete=True
+    while repete==True:
+        lin=True
+        col=True
+        while lin==True:
+            linha_ataque=int(input('Jogador, qual linha deseja atacar?'))
+            if linha_ataque<0 or linha_ataque>9:
+                print('Linha inválida')
+            else:
+                lin=False
+        while col==True:
+            coluna_ataque=int(input('Jogador, qual coluna deseja atacar?'))
+            if coluna_ataque<0 or coluna_ataque>9:
+                print('Coluna inválida!')
+            else:
+                col=False
+
 
 
 
