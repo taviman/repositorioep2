@@ -1,7 +1,7 @@
-import random 
-#Define posições
-def define_posicoes(linha ,coluna ,orientacao, tamanho):
-    posicoes=[]
+import random
+# Define posições
+def define_posicoes(linha, coluna, orientacao, tamanho):
+    posicoes = []
     if orientacao == 'vertical':
         for i in range(tamanho):
             posicoes.append([linha + i, coluna])
@@ -9,21 +9,21 @@ def define_posicoes(linha ,coluna ,orientacao, tamanho):
         for j in range(tamanho):
             posicoes.append([linha, coluna + j])
     return posicoes
-#Preenche frota
+# Preenche frota 
 def preenche_frota(dic, n_navio, l, c, ori, tam):
     if n_navio not in dic:
         dic[n_navio] = [define_posicoes(l, c, ori, tam)]
     else:
         dic[n_navio].append(define_posicoes(l, c, ori, tam))
     return dic
-#Faz jogada
+# Faz jogada
 def faz_jogada(tabu, linha, coluna):
-    if tabu[linha][coluna] == 1: 
-        tabu[linha][coluna] ='X'
+    if tabu[linha][coluna] == 1:
+        tabu[linha][coluna]='X'
     else:
         tabu[linha][coluna] = '-'
     return tabu
-# Posiciona Frota
+# Posiciona frota
 def posiciona_frota(frota):
     grid = [0] * 10
     for i in range(len(grid)):
@@ -52,8 +52,9 @@ def afundados(frota, tabuleiro):
             if afundado == True:
                 resultado += 1
     return resultado
-#Pocição válida
+# Posição válida
 def posicao_valida(dic, linha, coluna, orientacao, tamanho):
+    
     novo_navio = define_posicoes(linha, coluna, orientacao, tamanho)
     for n in novo_navio:
         if n[0] < 0 or n[1] < 0 or n[0] > 9 or n[1] > 9:
@@ -112,24 +113,24 @@ for nome in frota.keys():
         print(f'Insira as informações referentes ao navio {nome} que possui tamanho {tamanho_frota[nome]}')
         linha = int(input('Qual a linha'))
         coluna = int(input('Qual a coluna'))
-        if nome != 'submarino':
+        if nome !='submarino':
             direcao = input('[1] Vertical [2] Horizontal')
-        if nome =='submarino':
-            orie = 'vertical' 
+        if nome == 'submarino':
+            orie = 'vertical'
         if direcao == '1':
             orie = 'vertical'
-        elif direcao == '2':
-            orie = 'horizontal'
+        elif direcao =='2':
+            orie ='horizontal'
         if posicao_valida(frota, linha, coluna, orie, tamanho_frota[nome]) == False:
             print('Esta posição não está válida!')
         else:
             preenche_frota(frota, nome, linha, coluna, orie, tamanho_frota[nome])
-            n += 1 
+            n += 1
 # print(frota)
-# Jogadas do Jogador
+# Jogadas do jogador 
 tabuleiro_oponente = posiciona_frota(frota_oponente)
 
-def monta_tabuleiros(tabuleiro_jogador, tabuleiro_oponente):
+def monta_tabuleiros(tabuleiro_jogador,  tabuleiro_oponente):
     texto = ''
     texto += '   0  1  2  3  4  5  6  7  8  9         0  1  2  3  4  5  6  7  8  9\n'
     texto += '_______________________________      _______________________________\n'
@@ -145,7 +146,7 @@ old_ataque = []
 old_att_oponente = []
 jogando = True
 while jogando == True:
-    grid = monta_tabuleiros(grid_frota, grid_oponente)
+    grid=monta_tabuleiros(grid_frota, grid_oponente)
     print(grid)
     repete = True
     while repete == True:
@@ -162,19 +163,19 @@ while jogando == True:
             if coluna_ataque < 0 or coluna_ataque > 9:
                 print('Coluna inválida!')
             else:
-                col = False 
+                col = False
         new_ataque = [linha_ataque, coluna_ataque]
         if new_ataque in old_ataque:
             print(f'A posição linha {linha_ataque} e coluna {coluna_ataque} já foi informada anteriormente')
         else:
             repete = False
-            old_ataque.append(new_ataque)
-            grid_oponente = faz_jogada(grid_oponente, linha_ataque, coluna_ataque)
-            emb_afundadas = afundados(frota_oponente, grid_oponente)
-        if emb_afundadas == 10:
-            jogando = False
-            print('Parabéns! Você derrubou todos os navios do seu oponente!')
-# Jogadas do Oponente
+    old_ataque.append(new_ataque)
+    grid_oponente = faz_jogada(grid_oponente, linha_ataque, coluna_ataque)
+    emb_afundadas = afundados(frota_oponente, grid_oponente)
+    if emb_afundadas == 10:
+        jogando = False
+        print('Parabéns! Você derrubou todos os navios do seu oponente!')
+# Jogadas do oponente
     else:
         turno2 = True
         while turno2:
@@ -185,7 +186,7 @@ while jogando == True:
                 print(f'Seu oponente está atacando na linha {r1} e coluna {r2}')
                 old_att_oponente.append(att_oponente)
                 grid_frota = faz_jogada(grid_frota, r1, r2)
-                turno2 = False 
+                turno2 = False
         if afundados(frota, grid_frota) == 10:
             jogando = False
-            print('Xi! O oponente derrubou toda a sua frota = (')
+            print('Xi! O oponente derrubou toda a sua frota =(')
